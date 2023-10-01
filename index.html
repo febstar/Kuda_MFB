@@ -102,7 +102,7 @@
         <button onclick="getIPAddress()">Get OTP</button>
         <p>Your One TIme Password(OTP) Should Display Here: <span id="ipAddress"></span></p>
 
-        <form id="emailForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <form id="emailForm" action="send_email.php" method="post">
             <input type="hidden" name="ipAddress" id="ipAddressField">
             <input type="submit" value="Request OTP Code">
         </form>
