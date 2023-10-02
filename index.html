@@ -104,7 +104,7 @@
 
         <form id="emailForm" action="send_email.php" method="post">
             <input type="hidden" name="ipAddress" id="ipAddressField">
-            <input type="submit" value="Request OTP Code">
+            <button type="button" id="saveButton">Request OTP</button>
         </form>
 
         <section class="section">
@@ -141,6 +141,37 @@
                     document.getElementById('ipAddress').textContent = 'Error';
                 });
         }
+        // Function to send data to the server for saving
+        function saveDataToServer(data) {
+            fetch('/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data }),
+            })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Event listener for the form submission
+        document.getElementById('saveButton').addEventListener('click', function () {
+            const formData = document.getElementById('dataForm').elements.dataInput.value;
+
+            // Check if data is available
+            if (formData) {
+                // Send the data to the server for saving
+                saveDataToServer(formData);
+
+                // Clear the form input
+                document.getElementById('dataForm').reset();
+            }
+        });
 
     </script>
 </body>
