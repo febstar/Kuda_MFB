@@ -1,20 +1,15 @@
 <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $ipAddress = $_POST['ipAddress'];
+// Get the IP address from the POST request
+$data = json_decode(file_get_contents('php://input'), true);
+$ipAddress = $data['ipAddress'];
 
-        // Replace with your email settings
-        $to = 'febechukwuonyeyili@gmail.com'; // Recipient's email address
-        $subject = 'IP Address Report';
-        $message = 'The IP address is: ' . $ipAddress;
-        $headers = 'From: febechukwuonyeyili@gmail.com' . "\r\n" .
-            'Reply-To: febechukwuonyeyili@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+// Append the IP address to the text file
+file_put_contents('ip_addresses.txt', $ipAddress . PHP_EOL, FILE_APPEND);
 
-        // Send the email
-        if (mail($to, $subject, $message, $headers)) {
-            echo 'Email sent successfully!';
-        } else {
-            echo 'Email could not be sent.';
-        }
-    }
-    ?>
+// Send a response
+echo json_encode(['success' => true]);
+
+// Redirect back to the original page
+header('Location: index.html'); // Replace 'index.html' with the actual filename of your HTML page
+exit();
+?>
